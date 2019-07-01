@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Welcome from './components/TextField/TextField.Component';
+import SidebarMenu from './components/SidebarMenu/SidebarMenu.Component';
+import ColorPicker from './components/ColorPicker/ColorPicker.Component';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import MyNotes from './components/MyNotes/MyNotes.Component';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const  textArea = React.createRef()
+
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { shouldNavigate: false }
+  }
+
+  getColor = (val) => {
+    textArea.current.style.backgroundColor = `rgb(${val})`
+    textArea.current.children[0].style.backgroundColor = `rgb(${val})`
+  }
+
+  render() {
+    return(
+    <React.Fragment>
+      <Router>
+        <SidebarMenu></SidebarMenu>
+        <ColorPicker color={this.getColor}></ColorPicker>
+        <Route exact path="/" component={Home} />
+      <Route path="/myNotes/" component={MyNotes} />
+
+      </Router>
+    </React.Fragment>
+    )
+  }
+}
+
+function Home() {
+  return(
+  <div className="text-area" ref={ textArea }>
+    <Welcome></Welcome>
+  </div>
   );
 }
+
 
 export default App;
