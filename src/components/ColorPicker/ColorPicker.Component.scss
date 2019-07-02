@@ -1,4 +1,5 @@
 .color-picker {
+    @import '../../constants/variables.scss';
     position: absolute;
     right: 1rem;
     margin-top: 1rem;
@@ -18,19 +19,19 @@
 
     .color-1 {
         width: 1rem;
-        background-color: rgb(245, 202, 124);
+        background-color: $color1;
     }
     .color-2 {
         width: 1rem;
-        background-color: rgb(237, 173, 250);
+        background-color: $color2;
     }
     .color-3 {
         width: 1rem;
-        background-color: rgb(137, 137, 206);
+        background-color: $color3;
     }
     .color-4 {
         width: 1rem;
-        background-color: rgb(123, 241, 236);
+        background-color: $color4;
     }
     section {
         background-color: black;

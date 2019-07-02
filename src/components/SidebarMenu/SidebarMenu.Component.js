@@ -81,3 +81,11 @@ class SidebarMenu extends React.Component {
 }
 
 export default SidebarMenu;
+
+
+export const withSidebar = Component => (
+        <React.Fragment>
+            <SidebarMenu />
+            <Component/>
+        </React.Fragment>
+);

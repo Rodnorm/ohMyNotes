@@ -1,0 +1,105 @@
+.landing-page {
+    @import '../../constants/fonts.scss';
+    @import '../../constants/variables.scss';
+
+    background-image: url('../../assets/imgs/notes-background.png');
+    background-size: cover;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    .thank-you-note {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        color: white;
+        padding: .4rem;
+    }
+    .title {
+        font-family: 'Just Another Hand', cursive;
+        font-size: 10rem;
+        color: $color5;
+    }
+    .background-div {
+        line-height: 1.6rem;
+        text-align: justify;
+        font-family: 'Inconsolata', monospace;
+        max-width: 350px;
+        min-height: 150px;
+        max-height: 200px;
+        padding: .5rem;
+        border-radius: 5%  5% 5% 5%;
+        &.first {
+            ::selection {
+                color: white;
+                background: #F34213;
+            }
+            ::-moz-selection {
+                color: white;
+                background: #F34213;
+            }
+            background-color: rgb(134, 209, 155);
+            &:hover{
+                transform: scale(1.04);
+            }
+        }
+        &.second {
+            background-color: #F34213;
+            color: white;
+            ::selection {
+                color: black;
+                background: rgb(189, 255, 208);
+            }
+            ::-moz-selection {
+                color: black;
+                background: rgb(189, 255, 208);
+            }
+            &:hover{
+                transform: scale(1.04);
+            }
+        }
+        &.third {
+            ::selection {
+                background: black;
+                color: white;
+            }
+            ::-moz-selection{
+                background: black;
+                color: white;
+            }
+            background-color: #6A8EAE;
+            &:hover{
+                transform: scale(1.04);
+            }
+        }
+    }
+    section.flex {
+        justify-content: space-around;
+        height: 40vh;
+        width: 100%;
+        margin-top: 5rem;
+    }
+    div.flex.shadow {
+        margin-top: 4rem;
+        border: 2px solid $color5;
+        box-shadow: 0 0 50px $color5;
+        padding: 4rem;
+        border-radius: 40px;
+        background-color: rgba(0, 0, 0, 0.8);
+        &:hover {
+            cursor: pointer;
+            animation: myNotes 1s infinite;
+        }
+    }
+
+    @keyframes myNotes {
+        0% {
+            box-shadow: 0 0 50px white;
+        }
+        50% {
+            box-shadow: 0 0 50px #6A8EAE;
+        }
+        100% {
+            box-shadow: 0 0 50px white;
+        }
+    }
+}
