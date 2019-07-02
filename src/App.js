@@ -5,6 +5,7 @@ import SidebarMenu from './components/SidebarMenu/SidebarMenu.Component';
 import ColorPicker from './components/ColorPicker/ColorPicker.Component';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MyNotes from './components/MyNotes/MyNotes.Component';
+import * as ROUTES from './constants/routes';
 
 const  textArea = React.createRef()
 
@@ -26,8 +27,8 @@ class App extends React.Component {
       <Router>
         <SidebarMenu></SidebarMenu>
         <ColorPicker color={this.getColor}></ColorPicker>
-        <Route exact path="/" component={Home} />
-      <Route path="/myNotes/" component={MyNotes} />
+        <Route exact path={ROUTES.LANDING} component={Home} />
+      <Route path={ROUTES.MY_NOTES} component={MyNotes} />
 
       </Router>
     </React.Fragment>
