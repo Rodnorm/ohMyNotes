@@ -27,8 +27,7 @@ class SignUpBase extends Component {
     }
     onSubmit = e => {
         e.preventDefault()
-        const { username, email, passwordOne } = this.state;
-        debugger
+        const { email, passwordOne } = this.state;
         this.props.firebase
         .doCreateUserWithEmailAndPassword(email,passwordOne)
         .then(authUser => {

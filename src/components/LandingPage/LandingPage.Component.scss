@@ -1,7 +1,11 @@
 .landing-page {
     @import '../../constants/fonts.scss';
     @import '../../constants/variables.scss';
-
+    @mixin border-glow-hover {
+        &:hover {
+            box-shadow: 0 0 50px #6A8EAE
+        }
+    };
     background-image: url('../../assets/imgs/notes-background.png');
     background-size: cover;
     height: 100vh;
@@ -41,6 +45,7 @@
             &:hover{
                 transform: scale(1.04);
             }
+            @include border-glow-hover();
         }
         &.second {
             background-color: #F34213;
@@ -56,6 +61,7 @@
             &:hover{
                 transform: scale(1.04);
             }
+            @include border-glow-hover();
         }
         &.third {
             ::selection {
@@ -70,13 +76,14 @@
             &:hover{
                 transform: scale(1.04);
             }
+            @include border-glow-hover();
         }
     }
     section.flex {
         justify-content: space-around;
         height: 40vh;
         width: 100%;
-        margin-top: 5rem;
+        margin-top: 1.5rem;
     }
     div.flex.shadow {
         margin-top: 4rem;
@@ -89,6 +96,18 @@
             cursor: pointer;
             animation: myNotes 1s infinite;
         }
+    }
+
+    button.login-button {
+        font-family: 'Just Another Hand', cursive;
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: none;
+        border-radius: 20px;
+        color: $color5;
+        transform: scale(1.2);
+        @include border-glow-hover();
     }
 
     @keyframes myNotes {

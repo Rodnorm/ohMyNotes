@@ -1,7 +1,7 @@
 import React from 'react';
 import './TextField.Component.scss';
 
-class Welcome extends React.Component {
+class TextField extends React.Component {
 
 
     render() {
@@ -9,4 +9,4 @@ class Welcome extends React.Component {
     }
 }
 
-export default Welcome;
+export default TextField;
