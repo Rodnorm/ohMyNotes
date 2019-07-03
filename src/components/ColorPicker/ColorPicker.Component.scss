@@ -1,8 +1,5 @@
 .color-picker {
-    @import '../../constants/variables.scss';
-    position: absolute;
-    right: 1rem;
-    margin-top: 1rem;
+    @import '../../constants/variables.scss';    
     ul {
         display: flex;
         flex-direction: row;
@@ -36,8 +33,12 @@
     section {
         background-color: black;
         padding: .5rem;
-        border-radius: 5px;
-        margin-top: .5rem;
-        height: 1.5rem;
+        height: 1rem;
+    }
+    .color-picker-icon {
+        margin: .5rem;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }

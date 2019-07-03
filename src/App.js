@@ -10,6 +10,7 @@ import LandingPage from './components/LandingPage/LandingPage.Component';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import SignInPage from './components/SignIn/SignIn.Component';
+import Profile from './components/Profile/Profile.Component';
 
 const  textArea = React.createRef()
 
@@ -22,7 +23,7 @@ class App extends React.Component {
   componentDidMount() {
     this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
       authUser
-        ? this.setState({ authUser })
+        ? this.setState({ authUser }) 
         : this.setState({ authUser: null })
     });
   }
@@ -45,21 +46,28 @@ const getColor = (val) => {
   textArea.current.children[0].style.backgroundColor = `rgb(${val})`
 }
 
-const LoginContainer = (props) => (
-  <Router>
-    <Route exact path={ROUTES.LANDING} component={LandingPage} />
-    <Route exact path={ROUTES.SIGNUP} render={() => <SignUpPage />} />
-    <Route exact path={ROUTES.SIGNIN} render={() => <SignInPage />} />
-  </Router>
-);
+function LoginContainer() {
+  return(
+    <Router>
+      <Route exact path={ROUTES.LANDING} component={LandingPage} />
+      <Route exact path={ROUTES.SIGNUP} render={() => <SignUpPage />} />
+      <Route exact path={ROUTES.SIGNIN} render={() => <SignInPage />} />
+    </Router>
+  )
+};
 
-const DefaultContainer = (props) => (
-  <Router>
-    <SidebarMenu />
-    <Route exact path={ROUTES.LANDING} render={() => <React.Fragment> <ColorPicker color={getColor} /> <Home /> </React.Fragment>} />
-    <Route path={ROUTES.MY_NOTES} component={MyNotes} />
-  </Router>
-);
+function DefaultContainer(){
+  return (
+        <Router>
+          <SidebarMenu />
+          <div className="content">
+            <Route exact path={ROUTES.LANDING} component={MainWritingView} />
+            <Route path={ROUTES.MY_NOTES} component={MyNotes} />
+            <Route exact path={ROUTES.MY_PROFILE} component={Profile}/>
+          </div>
+        </Router>
+  )
+};
 
 function Home() {
   return(
@@ -67,6 +75,14 @@ function Home() {
     <TextField />
   </div>
   );
+}
+
+function MainWritingView() {
+  return (<div className="main-writing-view"> 
+            <Home />
+            <ColorPicker color={getColor} />
+          </div>
+  )
 }
 
 export default withFirebase(App);

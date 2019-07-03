@@ -1,11 +1,15 @@
 import React from 'react';
-import './ColorPicker.Component.scss'
+import './ColorPicker.Component.scss';
+import { faEyeSlash, faPaintBrush } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const iconRef = React.createRef();
 
 class ColorPicker extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { showSection: false };
+        this.state = { showSection: true };
     }
 
     toggleSection = () => {
@@ -15,8 +19,8 @@ class ColorPicker extends React.Component {
 
     render() {
         return(
-            <div className="color-picker">
-                <button onClick={this.toggleSection}>Change Colors</button>
+            <div className="color-picker" ref={iconRef}>
+                <FontAwesomeIcon onClick={this.toggleSection} icon={this.state.showSection ? faEyeSlash : faPaintBrush} size="1x" className="color-picker-icon"></FontAwesomeIcon>
                 { this.state.showSection && <Section color={this.props.color} />}
             </div>
         )
@@ -26,6 +30,7 @@ class ColorPicker extends React.Component {
 class Section extends React.Component {
 
     setColor = (color) => {
+        iconRef.current.style.backgroundColor = `rgb(${color})`;
         this.props.color(color);
     }
 
@@ -43,6 +48,5 @@ class Section extends React.Component {
         )
     }
 }
-
 
 export default ColorPicker;
