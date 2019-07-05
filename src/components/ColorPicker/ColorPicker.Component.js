@@ -3,8 +3,6 @@ import './ColorPicker.Component.scss';
 import { faEyeSlash, faPaintBrush } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const iconRef = React.createRef();
-
 class ColorPicker extends React.Component {
 
     constructor(props) {
@@ -19,7 +17,7 @@ class ColorPicker extends React.Component {
 
     render() {
         return(
-            <div className="color-picker" ref={iconRef}>
+            <div className="color-picker">
                 <FontAwesomeIcon onClick={this.toggleSection} icon={this.state.showSection ? faEyeSlash : faPaintBrush} size="1x" className="color-picker-icon"></FontAwesomeIcon>
                 { this.state.showSection && <Section color={this.props.color} />}
             </div>
@@ -30,7 +28,6 @@ class ColorPicker extends React.Component {
 class Section extends React.Component {
 
     setColor = (color) => {
-        iconRef.current.style.backgroundColor = `rgb(${color})`;
         this.props.color(color);
     }
 

@@ -1,10 +1,19 @@
-textarea {
-    caret-color: rgb(202, 45, 202);
-    font-size: 2rem;
-    padding: 1rem;
-    width: 100%;
-    resize: none;
-    overflow: auto;
-    outline: none;
-    border: none;
+.text-field {
+    display: flex;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+    textarea {
+        caret-color: rgb(202, 45, 202);
+        font-size: 2rem;
+        padding: 1rem;
+        width: 100%;
+        resize: none;
+        overflow: auto;
+        outline: none;
+        border: none;
+    }
+    
+    .right-top-align {
+    }
 }

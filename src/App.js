@@ -12,7 +12,7 @@ import * as ROUTES from './constants/routes';
 import SignInPage from './components/SignIn/SignIn.Component';
 import Profile from './components/Profile/Profile.Component';
 
-const  textArea = React.createRef()
+const mainView = React.createRef();
 
 class App extends React.Component {
   constructor(props) {
@@ -41,9 +41,10 @@ class App extends React.Component {
   }
 }
 
-const getColor = (val) => {
-  textArea.current.style.backgroundColor = `rgb(${val})`
-  textArea.current.children[0].style.backgroundColor = `rgb(${val})`
+const setBackgroundColor = (newColor) => {
+  mainView.current.children[0].children[1].style.backgroundColor = `rgb(${newColor})`;
+  mainView.current.children[0].style.backgroundColor = `rgb(${newColor})`;
+  mainView.current.children[1].style.backgroundColor = `rgb(${newColor})`;
 }
 
 function LoginContainer() {
@@ -69,18 +70,10 @@ function DefaultContainer(){
   )
 };
 
-function Home() {
-  return(
-  <div className="text-area" ref={ textArea }>
-    <TextField />
-  </div>
-  );
-}
-
 function MainWritingView() {
-  return (<div className="main-writing-view"> 
-            <Home />
-            <ColorPicker color={getColor} />
+  return (<div className="main-writing-view" ref={mainView}>
+            <TextField />
+            <ColorPicker color={setBackgroundColor} />
           </div>
   )
 }
