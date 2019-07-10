@@ -34,6 +34,7 @@ class Firebase {
     // Database API
     user = uid => this.db.ref(`users/${uid}`);
     notes = uid => this.db.ref(`notes/${uid}`);
+    noteList = (uid, nid) => this.db.ref(`notes/${uid}/${nid}`);
 }
 
 export default Firebase

@@ -19,9 +19,11 @@ class App extends React.Component {
     super(props);
     this.state = { authUser: null }
   }
+  user;
 
   componentDidMount() {
     this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
+      this.user = authUser;
       authUser
         ? this.setState({ authUser }) 
         : this.setState({ authUser: null })
@@ -35,7 +37,7 @@ class App extends React.Component {
   render() {
     return(
     <React.Fragment>
-        {this.state.authUser ? <DefaultContainer /> : <LoginContainer />}
+        {this.state.authUser ? <DefaultContainer user={this.user}/> : <LoginContainer />}
     </React.Fragment>
     )
   }
@@ -57,12 +59,12 @@ function LoginContainer() {
   )
 };
 
-function DefaultContainer(){
+function DefaultContainer(user) {
   return (
         <Router>
           <SidebarMenu />
           <div className="content">
-            <Route exact path={ROUTES.LANDING} component={MainWritingView} />
+            <Route exact path={ROUTES.LANDING} render={()=> <MainWritingView user={user.user} />} />
             <Route path={ROUTES.MY_NOTES} component={MyNotes} />
             <Route exact path={ROUTES.MY_PROFILE} component={Profile}/>
           </div>
@@ -70,9 +72,9 @@ function DefaultContainer(){
   )
 };
 
-function MainWritingView() {
+function MainWritingView(user) {
   return (<div className="main-writing-view" ref={mainView}>
-            <TextField />
+            <TextField user={user.user}/>
             <ColorPicker color={setBackgroundColor} />
           </div>
   )
