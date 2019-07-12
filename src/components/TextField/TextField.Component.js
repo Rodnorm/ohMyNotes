@@ -8,19 +8,23 @@ import Modal from '../ModalComponent/Modal.Component';
 class TextField extends React.Component {
     constructor(props) {
         super(props);
+        debugger
         this.state = {
-            inputValue: '',
             showModal: false,
             note: {
-            _userId: this.props.user.uid,
-            dates: {
-                creation: new Date(),
-                lastEdit: null
-            },
-            content: 'just bring it on ...' 
-        }};
+                title: '',
+                _userId: this.props.user.uid,
+                dates: {
+                    creation: new Date(),
+                    lastEdit: null
+                },
+                content: this.props.value ? this.props.value.content : 'just bring it on ...' 
+            }
+        };
         this.onModalChange = this.onModalChange.bind(this);
     }
+    noteList = '';
+    allowSave = true;
     key;
     timing = 3000;
     typingTimer;
@@ -32,10 +36,11 @@ class TextField extends React.Component {
         this.setState({
             showModal: false, 
             note: { 
+                title: this.modalConfig.input[0].value,
                 content: e.target.value,
                 dates: {
                     lastEdit: new Date(),
-                    creation: note.dates.creation
+                    creation: note.dates ? note.dates.creation : new Date()
                 }
             }
         });
@@ -48,18 +53,14 @@ class TextField extends React.Component {
 
     saveNote = () => {
         const { note } = this.state;
+
         if (this.isCreateScenario) {
+            note.title = this.modalConfig.input[0].value
             this.key = this.props.firebase.notes(this.props.user.uid).push({ note }).getKey();
             this.isCreateScenario = false;
         } else {
-            this.props.firebase.notes(this.props.user.uid).once('value').then(snap => {
-
-                this.props.firebase
-                .noteList(this.props.user.uid, this.key).set({ note })
-                .then(resp => {
-                });
-            });
-
+            this.props.firebase
+            .noteList(this.props.user.uid, this.key).set({ note });
         }
     }
 
@@ -85,7 +86,7 @@ class TextField extends React.Component {
             }
         ],
         button1: {
-            confirmAction: () => this.saveNote(),
+            confirmAction: () => this.checkNote(),
             text: 'OK'
         },
         button2: {
@@ -94,13 +95,37 @@ class TextField extends React.Component {
         }
     }
 
+    checkNote = () => {
+        this.setState({note: { title: this.modalConfig.input[0].value }})
+        this.state.showModal = false;
+
+        if (this.isCreateScenario) {
+            this.saveNote()
+            return true;
+        }
+        this.props.firebase.notes(this.props.user.uid).once('value').then(snap => {
+            this.noteList = snap.val();
+            Object.keys(this.noteList).forEach(key => {
+                if (this.noteList[key].title.trim() === this.modalConfig.input[0].value.trim()) {
+                    this.sameNameError();
+                    return false;
+                }
+            })
+        });
+        return true
+    }
+
+    sameNameError = () => {
+        this.allowSave = false;
+        alert('same name found!')
+    }
+
     onModalChange = (id, value) => {
         this.modalConfig.input.forEach(input => input.key === id ? input.value = value : null);
     }
 
     onModalClose = () => {
-        console.log(this.modalConfig.input[0])
-        this.setState({ showModal: false })
+        this.setState({ showModal: false });
     }
 
     render() {

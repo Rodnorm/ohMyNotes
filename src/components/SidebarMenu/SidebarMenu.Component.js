@@ -47,9 +47,6 @@ class SidebarMenuWithRouter extends React.Component {
         return <nav className="sidebar-menu">
                     <ul>
                         <Link to={ROUTES.LANDING}>
-                            <li onClick={() => this.toggleActive('main')}> <FontAwesomeIcon icon={faCoffee} color={this.state.main ? this.state.activeColor : 'white'} size="4x"/> Menu </li>
-                        </Link>
-                        <Link to={ROUTES.MY_NOTES}>
                             <li onClick={() => this.toggleActive('myNotes')}> <FontAwesomeIcon icon={faStickyNote} color={this.state.myNotes ? this.state.activeColor : 'white'} size="4x"/> Minhas Notas </li>
                         </Link>
                         <Link to={ROUTES.SETTINGS}>

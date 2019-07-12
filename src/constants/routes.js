@@ -6,3 +6,4 @@ export const SIGNUP = '/signup/';
 export const LANDING = '/';
 export const RECOVER_PASSWORD = '/recovery/';
 export const MY_PROFILE = '/profile/';
+export const NOTE = '/note/';
