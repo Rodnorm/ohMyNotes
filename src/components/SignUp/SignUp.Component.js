@@ -1,19 +1,29 @@
 import React, { Component } from 'react';
-// import './SignUp.Component.scss';
 import '../SignIn/SignIn.Component.scss';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import * as ROUTER from '../../constants/routes';
+import { ReturnPage } from '../ReturnPage/ReturnPageComponent';
 
-const SignUpPage = () => (
-    <div className="container">
-        <section className="sign">
-            <h1>SignUp</h1>
-            <SignUpForm />
-        </section>
-    </div>
-);
+class SignUpPage extends Component {
+    constructor(props) {
+        super(props);
+        debugger
+    }
+    render() {
+        return(
+            <div className="container">
+                <section className="sign">
+                    <ReturnPage history={this.props.history}/>
+                    <h1>SignUp</h1>
+                    <SignUpForm />
+                </section>
+            </div>
+        )
+    }
+}
+
 
 const INITIAL_STATE = {
     username: '',
@@ -103,13 +113,14 @@ class SignUpBase extends Component {
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpBase);
 
-const SignUpLink = () => (
+const SignUpLinkPure = () => (
     <p>
         Don't have an account?<Link to={ROUTER.SIGNUP}> Create one! xD </Link>
     </p>
 );
 
 
-export default SignUpPage;
 
+const SignUpLink = withRouter(SignUpLinkPure)
+export default withRouter(SignUpPage);
 export { SignUpForm, SignUpLink };

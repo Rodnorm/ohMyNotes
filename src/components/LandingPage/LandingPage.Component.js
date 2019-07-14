@@ -13,7 +13,7 @@ class LandingPage extends Component {
                 <div className="flex shadow">
                     <h1 className="title">Oh, My Notes!</h1>
                 </div>
-                <button className="login-button"><Link to={ROUTES.SIGNIN}>Enter</Link></button>
+                <button className="login-button"><Link to={ROUTES.SIGNIN}>Login</Link></button>
                 <p className="thank-you-note"> Photo by Min An from Pexels </p>
             </div>
         );

@@ -5,16 +5,30 @@ import { SignUpLink } from '../SignUp/SignUp.Component';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
 import './SignIn.Component.scss';
+import ReturnPage from '../ReturnPage/ReturnPageComponent';
 
-const SignInPage = (props) => (
-    <div className="container">
-        <section className="sign">
-            <h1>Hi, there :)</h1>
-            <SignInForm />
-            <SignUpLink />
-        </section>
-    </div>
-);
+
+
+class SignInPage extends Component {
+    constructor(props) {
+        super(props);
+        debugger
+    }
+    render() {
+        return (
+            <div className="container">
+                <section className="sign">
+                    <ReturnPage />
+                    <h1>Hi, there :)</h1>
+                    <SignInForm />
+                    <SignUpLink />
+                </section>
+            </div>
+        )
+    }
+    
+}
+
 
 const INITIAL_STATE = {
     email: '',
@@ -26,6 +40,7 @@ class SignInFormBase extends Component {
     constructor(props) {
         super(props);
         this.state = { ...INITIAL_STATE };
+
     }
     onSubmit = e => {
         e.preventDefault();
@@ -76,6 +91,6 @@ const SignInForm = compose(
     withFirebase
 )(SignInFormBase);
 
-export default SignInPage;
+export default withRouter(SignInPage);
 
 export { SignInForm }
