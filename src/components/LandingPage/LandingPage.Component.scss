@@ -1,12 +1,13 @@
 .landing-page {
-    width: 100%;
     @import '../../constants/fonts.scss';
     @import '../../constants/variables.scss';
-    @mixin border-glow-hover {
+    @mixin border-glow-hover { 
         &:hover {
             box-shadow: 0 0 50px #6A8EAE
         }
     };
+    width: 100%;
+    overflow: auto;
     background-image: url('../../assets/imgs/notes-background.png');
     background-size: cover;
     height: 100vh;
@@ -107,7 +108,7 @@
         border: none;
         border-radius: 20px;
         color: $color5;
-        transform: scale(1.2);
+        // transform: scale(1.2);
         @include border-glow-hover();
     }
 

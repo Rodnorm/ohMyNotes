@@ -4,13 +4,16 @@ import { compose } from 'recompose';
 import { SignUpLink } from '../SignUp/SignUp.Component';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
+import './SignIn.Component.scss';
 
 const SignInPage = (props) => (
-    <React.Fragment>
-        <h1>Sign in</h1>
-        <SignInForm />
-        <SignUpLink />
-    </React.Fragment>
+    <div className="container">
+        <section className="sign">
+            <h1>Hi, there :)</h1>
+            <SignInForm />
+            <SignUpLink />
+        </section>
+    </div>
 );
 
 const INITIAL_STATE = {

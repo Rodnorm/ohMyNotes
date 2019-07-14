@@ -8,11 +8,14 @@ import Modal from '../ModalComponent/Modal.Component';
 class TextField extends React.Component {
     constructor(props) {
         super(props);
-        debugger
         this.state = {
+            autoSave: false,
             showModal: false,
+            isSavingEnabled: this.props.value ? true : false,
+            isCreateScenario: this.props.value ? false : true,
+            key: this.props.value ? this.props.value.id : '',
             note: {
-                title: '',
+                title: this.props.value ? this.props.value.title : '',
                 _userId: this.props.user.uid,
                 dates: {
                     creation: new Date(),
@@ -25,57 +28,9 @@ class TextField extends React.Component {
     }
     noteList = '';
     allowSave = true;
-    key;
     timing = 3000;
     typingTimer;
-    isSavingEnabled = false;
-    isCreateScenario = true;
-
-    onChange = (e) => {
-        const { note } = this.state;
-        this.setState({
-            showModal: false, 
-            note: { 
-                title: this.modalConfig.input[0].value,
-                content: e.target.value,
-                dates: {
-                    lastEdit: new Date(),
-                    creation: note.dates ? note.dates.creation : new Date()
-                }
-            }
-        });
-    }
-
-    enableSaving = () => {
-        this.setState({ showModal: true})
-        this.isSavingEnabled = true;
-    }
-
-    saveNote = () => {
-        const { note } = this.state;
-
-        if (this.isCreateScenario) {
-            note.title = this.modalConfig.input[0].value
-            this.key = this.props.firebase.notes(this.props.user.uid).push({ note }).getKey();
-            this.isCreateScenario = false;
-        } else {
-            this.props.firebase
-            .noteList(this.props.user.uid, this.key).set({ note });
-        }
-    }
-
-    startTimer = () => {
-        this.clearTimer();
-        if (this.isSavingEnabled) {
-            this.typingTimer = setTimeout(this.saveNote, this.timing);
-        }
-    }
-
-    clearTimer = () => {
-        clearTimeout(this.typingTimer);
-    }
-
-    modalConfig = {
+    modalConfigCreate = {
         hasInput: true,
         hasMessage: false,
         input: [
@@ -95,24 +50,90 @@ class TextField extends React.Component {
         }
     }
 
-    checkNote = () => {
-        this.setState({note: { title: this.modalConfig.input[0].value }})
-        this.state.showModal = false;
+    modalConfigAutoSave = {
+        hasInput: false,
+        hasMessage: true,
+        button1: {
+            confirmAction: () => this.setAutoSave(),
+            text: 'Ok'
+        },
+        button2: {
+            cancelAction: () => this.onModalClose(),
+            text: 'Cancel'
+        }
+    }
 
-        if (this.isCreateScenario) {
+    setAutoSave = () => {
+        this.onModalClose();
+        this.setState({ autoSave: true });
+    }
+    
+    
+
+    onChange = (e) => {
+        const { note } = this.state;
+        this.setState({
+            showModal: false, 
+            note: { 
+                title: this.state.note.title ? this.state.note.title : this.modalConfigCreate.input[0].value,
+                content: e.target.value,
+                dates: {
+                    lastEdit: new Date(),
+                    creation: note.dates ? note.dates.creation : new Date()
+                }
+            }
+        });
+    }
+
+    enableSaving = () => {
+        if (this.state.isCreateScenario) {
+            this.setState({});
+        }
+        this.setState({ showModal: true, isSavingEnabled: true });
+    }
+
+    saveNote = () => {
+        const { note } = this.state;
+        if (this.state.isCreateScenario) {
+            note.title = this.modalConfigCreate.input[0].value
+            let key = this.props.firebase.notes(this.props.user.uid).push({ note }).getKey();
+            this.setState({ key, isCreateScenario: false });
+        } else {
+            this.props.firebase
+            .noteList(this.props.user.uid, this.state.key).set({ note });
+        }
+    }
+
+    startTimer = () => {
+        this.clearTimer();
+        if (this.state.isSavingEnabled) {
+            this.typingTimer = setTimeout(this.saveNote, this.timing);
+        }
+    }
+
+    clearTimer = () => {
+        clearTimeout(this.typingTimer);
+    }
+
+    
+
+    checkNote = () => {
+        this.setState({note: { title: this.modalConfigCreate.input[0].value, showModal: false }})
+
+        if (this.state.isCreateScenario) {
             this.saveNote()
             return true;
         }
         this.props.firebase.notes(this.props.user.uid).once('value').then(snap => {
             this.noteList = snap.val();
             Object.keys(this.noteList).forEach(key => {
-                if (this.noteList[key].title.trim() === this.modalConfig.input[0].value.trim()) {
+                if (this.noteList[key].title.trim() === this.modalConfigCreate.input[0].value.trim()) {
                     this.sameNameError();
                     return false;
                 }
             })
         });
-        return true
+        return true;
     }
 
     sameNameError = () => {
@@ -121,7 +142,7 @@ class TextField extends React.Component {
     }
 
     onModalChange = (id, value) => {
-        this.modalConfig.input.forEach(input => input.key === id ? input.value = value : null);
+        this.modalConfigCreate.input.forEach(input => input.key === id ? input.value = value : null);
     }
 
     onModalClose = () => {
@@ -130,10 +151,11 @@ class TextField extends React.Component {
 
     render() {
         const { note } = this.state;
+        console.log('text-field-render')
         return (
             <div className="text-field">
-                {this.state.showModal && <Modal data={this.modalConfig}/>}
-                <FontAwesomeIcon icon={faSave} className="right-top-align" size="2x" onClick={this.enableSaving}/>
+                {this.state.showModal && <Modal data={this.props.value ? this.modalConfigAutoSave : this.modalConfigCreate}/>}
+                {!this.state.autoSave && <FontAwesomeIcon icon={faSave} className="right-top-align" size="2x" onClick={this.enableSaving}/>}
                 <textarea onChange={this.onChange} autoFocus onKeyUp={this.startTimer} onKeyDown={this.clearTimer} value={note.content}/>
             </div>
         );

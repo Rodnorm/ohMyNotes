@@ -3,9 +3,11 @@
     @import '../../constants/variables.scss';
     width: 100%;
     height: 100%;
+    overflow: auto;
 
     ul {
         display: flex;
+        flex-wrap: wrap;  
         li {
             .add-icon {
                 display: flex;
@@ -23,10 +25,12 @@
             flex-direction: column;
             justify-content: space-around;
             .card-title {
+                font-family: 'Inconsolata', monospace;
                 margin: 1rem;
                 text-align: justify;
             }
             .card-content {
+                font-family: 'Inconsolata', monospace;
                 margin: 1rem;
             }
             &:hover {

@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import './SignUp.Component.scss';
+// import './SignUp.Component.scss';
+import '../SignIn/SignIn.Component.scss';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import * as ROUTER from '../../constants/routes';
 
 const SignUpPage = () => (
-    <div className="sign-up">
-        <h1>SignUp</h1>
-        <SignUpForm />
+    <div className="container">
+        <section className="sign">
+            <h1>SignUp</h1>
+            <SignUpForm />
+        </section>
     </div>
 );
 
@@ -89,7 +92,7 @@ class SignUpBase extends Component {
                     value={ passwordTwo }
                     onChange={this.onChange}
                     type="password"
-                    placeholder="enter your password"
+                    placeholder="repeat your password"
                 />
                 <button disabled={isInvalid}>Sign up</button>
                 { error && <p> { error.message } </p> }
@@ -100,10 +103,9 @@ class SignUpBase extends Component {
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpBase);
 
-
 const SignUpLink = () => (
     <p>
-        Hey! <Link to={ROUTER.SIGNUP}> Create an account! </Link>
+        Don't have an account?<Link to={ROUTER.SIGNUP}> Create one! xD </Link>
     </p>
 );
 

@@ -4,6 +4,6 @@ import './LoaderComponent.scss';
 
 export default class Loader extends Component {
     render() {
-        return(<div className="loader"><img src={logo} alt='Loading image'/></div>)
+        return(<div className="loader"><img src={logo} alt='Wait a moment while we load your data'/></div>)
     }
 }

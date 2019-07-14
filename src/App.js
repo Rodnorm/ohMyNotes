@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import SignInPage from './components/SignIn/SignIn.Component';
 import Profile from './components/Profile/Profile.Component';
+import './constants/Query.scss'
 
 const mainView = React.createRef();
 
@@ -74,21 +75,41 @@ function DefaultContainer(user) {
 };
 
 class MainWriting extends React.Component {
+
+
+
   constructor(props) {
     super(props);
     this.state = {
       hasFinishedLoading: false
     }
   }
-
-  render() {
+  componentWillMount() {
     if (this.props.history.location.state) {
+      console.log('main-writing-view-render')
+      const key = this.props.history.location.state.item;
       this.props.firebase
       .noteList(this.props.user.uid, this.props.history.location.state.item)
       .once('value').then(snapshot => {
-        this.setState({ value: snapshot.val(),hasFinishedLoading: true })
+        let value = snapshot.val();
+        value.note.id = key;
+        this.setState({ value, hasFinishedLoading: true });
       });
     }
+  }
+
+  _isMounted = false;
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  render() {
+    
+
     return (<div className="main-writing-view" ref={mainView}>
               {(this.props.history.location.state && this.state.hasFinishedLoading) && <TextField user={this.props.user} value={this.state.value.note} />}
               {!this.props.history.location.state && <TextField user={this.props.user} />}
