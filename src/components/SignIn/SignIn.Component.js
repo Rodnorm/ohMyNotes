@@ -12,7 +12,6 @@ import ReturnPage from '../ReturnPage/ReturnPageComponent';
 class SignInPage extends Component {
     constructor(props) {
         super(props);
-        debugger
     }
     render() {
         return (

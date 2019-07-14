@@ -9,7 +9,6 @@ import { ReturnPage } from '../ReturnPage/ReturnPageComponent';
 class SignUpPage extends Component {
     constructor(props) {
         super(props);
-        debugger
     }
     render() {
         return(

@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export class ReturnPage extends Component {
     constructor(props) {
         super(props);
-        debugger
     }
     returnPageFunction = () => {
         this.props.history.goBack()
