@@ -16,7 +16,7 @@ import './constants/Query.scss'
 
 const mainView = React.createRef();
 
-class App extends React.Component {
+class AppBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = { authUser: null }
@@ -120,4 +120,5 @@ class MainWriting extends React.Component {
 }
 const MainWritingView = compose(withRouter, withFirebase)(MainWriting)
 
+const App = compose(withFirebase, withRouter)(AppBase)
 export default withFirebase(App);
