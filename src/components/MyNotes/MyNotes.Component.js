@@ -34,13 +34,12 @@ class MyNotesPure extends React.Component {
         if (this.state && this.state.myNotes) {
             Object.keys(this.state.myNotes).forEach(key => keyContainer.push(key));
         }
-
         return(
             <div className="my-notes">
                 <ul className="no-select">
                     { keyContainer.length > 0 && keyContainer.map(item => 
                         item !== 'addElement'
-                        ? <li key={this.state.myNotes[item].note.title} onDoubleClick={() => redirect(item)}>
+                        ? <li key={this.state.myNotes[item].note.title} onClick={() => redirect(item)}>
                                 <div className="card-title">
                                     {this.state.myNotes[item].note.title}
                                 </div>

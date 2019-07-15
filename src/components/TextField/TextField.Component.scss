@@ -3,14 +3,19 @@
     display: flex;
 	justify-content: center;
 	height: 100%;
-	width: 100%;
+    width: 100%;
+    .icon-holder {
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column-reverse;
+    }
     textarea {
         &::-webkit-scrollbar {
             display: none;
         }
         caret-color: rgb(202, 45, 202);
         font-size: 2rem;
-        padding-top: 3rem;
+        padding-top: 3.3rem;
         width: 100%;
         resize: none;
         overflow: auto;
@@ -23,16 +28,18 @@
     }
     .title-input {
         &::placeholder {
-            color: purple;
+            color: white;
             opacity: .5;
         }
         font-size: 1.5rem;
         min-width: 400px;
         @include input-size();
-        border-bottom: 1px solid purple;
+        padding: .4rem;
+        caret-color: white;
         position: absolute;
-        right: 0;
         margin: 1rem;
+        background-color: purple;
+        color: white;
         &:focus {
             border: 1px solid purple;
         }
@@ -46,9 +53,9 @@
         }
         &.save-icon {
             margin: .5rem;
-            &:hover {
-                cursor: pointer;
-            }
+        }
+        &:hover {
+            cursor: pointer;
         }
     }
     
