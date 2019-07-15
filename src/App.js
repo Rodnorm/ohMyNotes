@@ -86,7 +86,6 @@ class MainWriting extends React.Component {
   }
   componentWillMount() {
     if (this.props.history.location.state) {
-      console.log('main-writing-view-render')
       const key = this.props.history.location.state.item;
       this.props.firebase
       .noteList(this.props.user.uid, this.props.history.location.state.item)

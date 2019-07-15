@@ -13,5 +13,10 @@
     div#root {
         flex-direction: column-reverse;
     }
-
+    .text-field {
+        .title-input {
+            bottom: 30px;
+            width: 80%;
+        }
+    }
 }

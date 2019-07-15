@@ -7,9 +7,6 @@ import * as ROUTER from '../../constants/routes';
 import { ReturnPage } from '../ReturnPage/ReturnPageComponent';
 
 class SignUpPage extends Component {
-    constructor(props) {
-        super(props);
-    }
     render() {
         return(
             <div className="container">

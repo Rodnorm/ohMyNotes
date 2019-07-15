@@ -1,7 +1,7 @@
 import React from 'react';
 import './TextField.Component.scss';
 import { withFirebase } from '../Firebase/';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '../ModalComponent/Modal.Component';
 
@@ -11,6 +11,7 @@ class TextField extends React.Component {
         this.state = {
             autoSave: false,
             showModal: false,
+            saving: false,
             isSavingEnabled: this.props.value ? true : false,
             isCreateScenario: this.props.value ? false : true,
             key: this.props.value ? this.props.value.id : '',
@@ -21,14 +22,14 @@ class TextField extends React.Component {
                     creation: new Date(),
                     lastEdit: null
                 },
-                content: this.props.value ? this.props.value.content : 'just bring it on ...' 
+                content: this.props.value ? this.props.value.content : '' 
             }
         };
         this.onModalChange = this.onModalChange.bind(this);
     }
     noteList = '';
     allowSave = true;
-    timing = 3000;
+    timing = 2000;
     typingTimer;
     modalConfigCreate = {
         hasInput: true,
@@ -53,6 +54,7 @@ class TextField extends React.Component {
     modalConfigAutoSave = {
         hasInput: false,
         hasMessage: true,
+        message: 'Click Ok to enable auto-save xD',
         button1: {
             confirmAction: () => this.setAutoSave(),
             text: 'Ok'
@@ -75,8 +77,8 @@ class TextField extends React.Component {
         this.setState({
             showModal: false, 
             note: { 
-                title: this.state.note.title ? this.state.note.title : this.modalConfigCreate.input[0].value,
-                content: e.target.value,
+                title: e.target.name === 'title' ? e.target.value : note.title,
+                content: e.target.name === "content" ? e.target.value : note.content,
                 dates: {
                     lastEdit: new Date(),
                     creation: note.dates ? note.dates.creation : new Date()
@@ -94,13 +96,14 @@ class TextField extends React.Component {
 
     saveNote = () => {
         const { note } = this.state;
+        this.setState({ saving: true })
         if (this.state.isCreateScenario) {
             note.title = this.modalConfigCreate.input[0].value
             let key = this.props.firebase.notes(this.props.user.uid).push({ note }).getKey();
-            this.setState({ key, isCreateScenario: false });
+            this.setState({ key, isCreateScenario: false, saving: false });
         } else {
             this.props.firebase
-            .noteList(this.props.user.uid, this.state.key).set({ note });
+            .noteList(this.props.user.uid, this.state.key).set({ note }).then(() => setTimeout(() => this.setState({ saving: false }), 1000));
         }
     }
 
@@ -118,7 +121,7 @@ class TextField extends React.Component {
     
 
     checkNote = () => {
-        this.setState({note: { title: this.modalConfigCreate.input[0].value, showModal: false }})
+        this.setState({ note: { title: this.modalConfigCreate.input[0].value }, showModal: false });
 
         if (this.state.isCreateScenario) {
             this.saveNote()
@@ -151,12 +154,13 @@ class TextField extends React.Component {
 
     render() {
         const { note } = this.state;
-        console.log('text-field-render')
         return (
             <div className="text-field">
+                <input name="title" className="title-input" onKeyUp={this.startTimer} onKeyDown={this.clearTimer} onChange={this.onChange} value={note.title} placeholder={!this.state.note.content ? 'insert your title here' : null} />
                 {this.state.showModal && <Modal data={this.props.value ? this.modalConfigAutoSave : this.modalConfigCreate}/>}
-                {!this.state.autoSave && <FontAwesomeIcon icon={faSave} className="right-top-align" size="2x" onClick={this.enableSaving}/>}
-                <textarea onChange={this.onChange} autoFocus onKeyUp={this.startTimer} onKeyDown={this.clearTimer} value={note.content}/>
+                {!this.state.saving && <FontAwesomeIcon icon={faSave} className="save-icon" size="2x" onClick={this.enableSaving}/>}
+                {this.state.saving && <FontAwesomeIcon icon={faSpinner} className="loading" size="2x" />}
+                <textarea name="content" placeholder={!this.state.note.content ? 'just bring it on ...' : null } onChange={this.onChange} autoFocus onKeyUp={this.startTimer} onKeyDown={this.clearTimer} value={note.content}/>
             </div>
         );
     }

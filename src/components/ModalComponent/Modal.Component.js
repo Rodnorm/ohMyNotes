@@ -22,18 +22,17 @@ export default class Modal extends Component {
         })
     }
     render() {
+
         return (
             <div className="modal">
                 <section className="modal-content">
                     <span className="close" onClick={this.props.data.button2.cancelAction}>&times;</span>
-                    {this.props.data.hasMessage && this.props.data.message}
-                    {this.props.data.hasInput && this.props.data.input.map(input => <input  
-                                                                                            id={input.key}
-                                                                                            value={this.state[input.key]}
-                                                                                            key={input.key}
-                                                                                            onChange={this.onChange}
-                                                                                            placeholder={input.placeholder}
-                                                                                    />)}
+                    {this.props.data.hasMessage && <p className="message">{this.props.data.message}</p>}
+                    {this.props.data.hasInput && <div className="input-group"> {this.props.data.input.map(input => <input id={input.key}
+                                                                            value={this.state[input.key]}
+                                                                            key={input.key}
+                                                                            onChange={this.onChange}
+                                                                            placeholder={input.placeholder}/>)} </div>}
                     <footer className="buttons-group">
                         <button onClick={this.props.data.button1.confirmAction}>{this.props.data.button1.text}</button>
                         <button onClick={this.props.data.button2.cancelAction}>{this.props.data.button2.text}</button>

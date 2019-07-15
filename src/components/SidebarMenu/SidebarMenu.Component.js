@@ -1,6 +1,6 @@
 import React from 'react';
 import './SidebarMenu.Component.scss';
-import { faStickyNote, faCogs, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faStickyNote, faCogs, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from "react-router-dom";
 import * as ROUTES from '../../constants/routes';

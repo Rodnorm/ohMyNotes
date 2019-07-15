@@ -1,19 +1,60 @@
 .text-field {
+    @import '../../constants/Mixins.scss';
     display: flex;
 	justify-content: center;
 	height: 100%;
 	width: 100%;
     textarea {
+        &::-webkit-scrollbar {
+            display: none;
+        }
         caret-color: rgb(202, 45, 202);
         font-size: 2rem;
-        padding: 1rem;
+        padding-top: 3rem;
         width: 100%;
         resize: none;
         overflow: auto;
         outline: none;
         border: none;
+        &::placeholder {
+            color: purple;
+            opacity: .5;
+        }
+    }
+    .title-input {
+        &::placeholder {
+            color: purple;
+            opacity: .5;
+        }
+        font-size: 1.5rem;
+        min-width: 400px;
+        @include input-size();
+        border-bottom: 1px solid purple;
+        position: absolute;
+        right: 0;
+        margin: 1rem;
+        &:focus {
+            border: 1px solid purple;
+        }
     }
     
-    .right-top-align {
+    svg {
+        &.loading {
+            margin: .5rem;
+            margin-right: .2rem;
+            animation: rotate 1s infinite linear;
+        }
+        &.save-icon {
+            margin: .5rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    
+    @keyframes rotate {
+        100% {
+            transform: rotate(-360);
+        }
     }
 }
