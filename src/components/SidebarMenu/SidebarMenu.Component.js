@@ -19,7 +19,6 @@ class SidebarMenuWithRouter extends React.Component {
             myProfile: false,
             activeColor: 'rgb(237, 173, 250)'
         }
-        
     }
 
     handleLogout = () => {
@@ -51,9 +50,6 @@ class SidebarMenuWithRouter extends React.Component {
                         </Link>
                         <Link to={ROUTES.SETTINGS}>
                             <li onClick={() => this.toggleActive('settings')}> <FontAwesomeIcon icon={faCogs} color={this.state.settings ? this.state.activeColor : 'white'} size="4x"/> </li>
-                        </Link>
-                        <Link to={ROUTES.MY_PROFILE}>
-                            <li onClick={() => this.toggleActive('myProfile')}> <FontAwesomeIcon icon={faUser} color={this.state.myProfile ? this.state.activeColor : 'white'} size="4x"/> </li>
                         </Link>
                         <Link to={ROUTES.LANDING}>
                             <li onClick={() => this.toggleActive('logout')}> <FontAwesomeIcon icon={faSignOutAlt} color={this.state.logout ? this.state.activeColor : 'white'} size="4x"/> </li>

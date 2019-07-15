@@ -15,7 +15,7 @@ class MyNotesPure extends React.Component {
             loading: true
         }
         this.props.firebase.notes(props.user.uid).once('value').then(snap => {
-            this.setState({ myNotes: snap.val(), loading: false });
+            setTimeout(() => this.setState({ myNotes: snap.val(), loading: false }), 700);
         });
     }
 
