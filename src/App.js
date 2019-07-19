@@ -91,7 +91,7 @@ class MainWriting extends React.Component {
       .noteList(this.props.user.uid, this.props.history.location.state.item)
       .once('value').then(snapshot => {
         let value = snapshot.val();
-        value.note.id = key;
+        value.id = key;
         this.setState({ value, hasFinishedLoading: true });
       });
     }
@@ -110,7 +110,7 @@ class MainWriting extends React.Component {
     
 
     return (<div className="main-writing-view" ref={mainView}>
-              {(this.props.history.location.state && this.state.hasFinishedLoading) && <TextField user={this.props.user} value={this.state.value.note} />}
+              {(this.props.history.location.state && this.state.hasFinishedLoading) && <TextField user={this.props.user} value={this.state.value} />}
               {!this.props.history.location.state && <TextField user={this.props.user} />}
               <ColorPicker color={setBackgroundColor} />
             </div>

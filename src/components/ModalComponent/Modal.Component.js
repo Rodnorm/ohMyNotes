@@ -17,7 +17,7 @@ export default class Modal extends Component {
         });
         this.props.data.input.forEach(prop => {
             if (prop.key === e.target.id) {
-                prop.onChange(prop.key, e.target.value);
+                prop.onChange(this.props.data.input.indexOf(prop), e.target.value, e);
             }
         })
     }
@@ -28,11 +28,31 @@ export default class Modal extends Component {
                 <section className="modal-content">
                     <span className="close" onClick={this.props.data.button2.cancelAction}>&times;</span>
                     {this.props.data.hasMessage && <p className="message">{this.props.data.message}</p>}
-                    {this.props.data.hasInput && <div className="input-group"> {this.props.data.input.map(input => <input id={input.key}
-                                                                            value={this.state[input.key]}
-                                                                            key={input.key}
-                                                                            onChange={this.onChange}
-                                                                            placeholder={input.placeholder}/>)} </div>}
+                    {this.props.data.hasInput && <div className="input-group">
+                        {this.props.data.input.map(input => 
+                        input.type === 'checkbox' ?
+                            <label>
+                                <input id={input.key}
+                                    value={this.state[input.key]}
+                                    key={input.key}
+                                    type={input.type}
+                                    onChange={this.onChange}
+                                    checked={input.value}
+                                />
+                                <span className="no-select">{input.label}</span>
+                            </label>    
+                                :
+                            <input id={input.key}
+                                value={this.state[input.key]}
+                                key={input.key}
+                                type={input.type}
+                                onChange={this.onChange}
+                                placeholder={input.placeholder}
+                                />
+                            )
+                        }
+                                                </div> 
+                    }
                     <footer className="buttons-group">
                         <button onClick={this.props.data.button1.confirmAction} className={this.props.data.hasInput && !this.props.data.input[0].value ? 'disabled': ''} disabled={this.props.data.hasInput && !this.props.data.input[0].value}>{this.props.data.button1.text}</button>
                         <button onClick={this.props.data.button2.cancelAction}>{this.props.data.button2.text}</button>

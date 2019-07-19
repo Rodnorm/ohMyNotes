@@ -4,7 +4,16 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-
+    .not-found-search{
+        display: flex;
+        justify-content: center;
+        span {
+            padding: .5rem;
+            border-radius: 4px;
+            background-color: #F3E9D2;
+            font-family: 'Inconsolata', monospace;
+        }
+    }
     ul {
         display: flex;
         flex-wrap: wrap;  

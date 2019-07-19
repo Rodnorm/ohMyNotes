@@ -1,0 +1,25 @@
+.search-field {
+    @import '../../constants/Mixins.scss';
+    display: flex;
+    justify-content: center;
+    margin: .5rem;
+    align-items: center;
+    flex-direction: column;
+    section {
+        display: flex;
+    }
+    input {
+        min-width: 40%;
+        font-family: 'Inconsolata', monospace;
+        @include input-size();
+        border-bottom: 1px solid purple;
+        &:focus {
+            border: 1px solid purple;
+        }
+        &::placeholder {
+            text-transform: uppercase;
+            color: purple;
+            opacity: .5;
+        }
+    }
+}
